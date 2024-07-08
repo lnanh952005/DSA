@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector <int> ke[1001];
+int used[1001];
+void DFS(int u) {
+	cout << u << " ";
+	used[u]=1;
+	for(auto v : ke[u]) {
+		if(used[v]==0) {
+			DFS(v);
+		}
+	}
+}
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n,m,u;
+		cin >> n >> m >> u;
+		while(m--) {
+			int x,y;
+			cin >> x >> y;
+			ke[x].push_back(y);
+			ke[y].push_back(x);
+		}
+		DFS(u);
+		for(int i=1;i<=n;i++){
+		    ke[i].clear();
+		}
+		memset(used,0,sizeof(used));
+		cout << endl;
+	}
+}
