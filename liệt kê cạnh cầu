@@ -34,19 +34,20 @@ int tplt(int s,int t){
 	}
 	return cnt;
 }
+void dinh_cau(){
+	int cc = tplt(0,0);
+	for(auto it : dscanh){
+		int x = it.first;
+		int y = it.second;
+		memset(used,0,sizeof(used));
+		if(tplt(x,y) > cc) cout << x << " " << y << " ";
+	}
+}
 int main() {
 	int t; cin >> t;
 	while(t--){
 		nhap();
-		int cc = tplt(0,0); // thanh phan lien thong ban dau 
-		memset(used,0,sizeof(used));
-		for(auto it : dscanh){
-			int x = it.first, y = it.second;
-			memset(used,0,sizeof(used));
-			if(cc < tplt(x,y)){
-				cout << x << " " << y << " ";
-			}
-		}
+		dinh_cau();
 		cout << endl;
 		for(int i=1;i<=n;i++) ke[i].clear();
 		dscanh.clear();
