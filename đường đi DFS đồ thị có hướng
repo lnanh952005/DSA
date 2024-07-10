@@ -33,7 +33,7 @@ int main() {
 				v = parent[v];
 			}
 			kq.push_back(u);
-			sort(kq.begin(),kq.end());
+			reverse(kq.begin(),kq.end());
 			for(int x : kq){
 				cout << x << " " ;
 			}
