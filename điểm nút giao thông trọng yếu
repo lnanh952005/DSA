@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+vector <int> ke[1001];
+int vst[1001];
+int n,m;
+void nhap(){
+	cin >> n >> m;
+	for(int i=0;i<m;i++){
+		int x,y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+void rs(){
+	for(int i=1;i<=n;i++){
+		ke[i].clear();
+	}
+	memset(vst,0,sizeof(vst));
+}
+void DFS(int u){
+	vst[u] = 1;
+	for(int v : ke[u]){
+		if(!vst[v]){
+			DFS(v);
+		}
+	}
+}
+int tplt(){
+	int cnt = 0;
+	for(int i=1;i<=n;i++){
+		if(!vst[i]){
+			cnt++;
+			DFS(i);
+		}
+	}
+	return cnt;
+}
+void dinh_tru(){
+	int cc = tplt();
+	vector <int> kq;
+	for(int i=1;i<=n;i++){
+		memset(vst,0,sizeof(vst));
+		vst[i] = 1;
+		if(tplt() > cc){
+			kq.push_back(i);
+		}
+	}
+	cout <<kq.size() << endl;
+	for(int x : kq){
+		cout <<x << " ";
+	}
+	cout << endl;
+}
+int main() {
+	int q; cin >> q;
+	while(q--){
+		nhap();
+		dinh_tru();
+		rs();
+	}
+}
