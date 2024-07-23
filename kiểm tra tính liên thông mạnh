@@ -2,8 +2,9 @@
 using namespace std;
 vector <int> ke[1001];
 int used[1001];
-int n,m,ok;
+int n,m,ok,cnt;
 void DFS(int u){
+	cnt++;
 	used[u]=1;
 	for(int v : ke[u]){
 		if(used[v]==0){
@@ -23,10 +24,15 @@ int main() {
 	int t; cin >> t;
 	while(t--){
 		nhap();
-		ok=1;
-		DFS(1);
+		ok = 1;
 		for(int i=1;i<=n;i++){
-			if(used[i] == 0) ok=0;
+			memset(used,0,sizeof(used));
+			cnt = 0;
+			DFS(i);
+			if(cnt != n){
+				ok = 0;
+				break;
+			}
 		}
 		if(ok) cout << "YES\n";
 		else cout <<"NO\n";
