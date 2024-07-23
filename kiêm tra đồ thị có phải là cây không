@@ -40,3 +40,55 @@ int main() {
 		memset(used,0,sizeof(used));
 	}
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// cách 2 dùng Union 
+#include <bits/stdc++.h>
+using namespace std;
+int par[1001],sz[1001];
+int n,m;
+void rs(){
+	memset(par,0,sizeof(par));
+	memset(sz,0,sizeof(sz));
+}
+void make_set(){
+	for(int i=1;i<=n;i++){
+		par[i] = i;
+		sz[i] = 1;
+	}
+}
+int find(int u){
+	if(u == par[u]) return u;
+	return par[u] = find(par[u]);
+}
+
+bool Union(int u,int v){
+	u = find(u);
+	v = find(v);
+	if(u == v) return false;
+	if(sz[u] > sz[v]){
+		par[v] = u;
+		sz[u] += sz[v];
+	}
+	else{
+		par[u] = v;
+		sz[v] += sz[u];
+	}
+	return true;
+}
+int main() {
+	int h; cin >> h;
+	while(h--){
+		cin >> n;
+		make_set();
+		int ok = 1;
+		for(int i=1;i<=n-1;i++){
+			int x,y; cin >> x >> y;
+			if(!Union(x,y)){
+				ok = 0;
+			}
+		}
+		if(ok) cout << "YES" << endl;
+		else cout << "NO" << endl;
+		rs();
+	}
+}
