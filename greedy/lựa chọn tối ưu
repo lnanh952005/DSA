@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	int t; cin >> t;
+	while(t--){
+		int cnt=0;
+		vector <pair<int,int>> v;
+		int n; cin >> n;
+		for(int i=0;i<n;i++){
+			int x,y; cin >> x >>y;
+			v.push_back({x,y});
+		}
+		sort(v.begin(),v.end(),[](auto a,auto b)->bool{
+		    return a.second < b.second;
+		});
+		int kt = 0;
+		for(int i=0;i<n;i++){
+		    if( kt <= v[i].first){
+		        cnt++;
+		        kt = v[i].second;
+		    }
+		}
+		cout << cnt << endl;
+	}
+}
