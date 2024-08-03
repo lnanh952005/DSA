@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int mod = 1e9 + 7;
+int main() {
+	int t;cin >> t;
+	while(t--) {
+		int n;cin >>n;
+		priority_queue<ll,vector<ll>,greater<ll>> pq;
+		while(n--) {
+			ll x;
+			cin >> x;
+			pq.push(x);
+		}
+		ll ans = 0;
+		while(pq.size() >= 2) {
+			ll a = pq.top();pq.pop();
+			ll b = pq.top();pq.pop();
+			ll tong = (a+b) % mod;
+			pq.push(tong);
+			ans = (ans + tong) % mod;
+		}
+		ans %= mod;
+		cout << ans << endl;
+	}
+}
