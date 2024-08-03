@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector <int> ke[1001];
+int used[1001];
+int parent[1001];
+void BFS(int u){
+	queue<int> q;
+	q.push(u);
+	used[u]=1;
+	while(q.size()!=0){
+		int x = q.front() ; q.pop();
+		for(int v : ke[x]){
+			if(used[v]==0){
+				used[v] = 1;
+				parent[v] = x;
+				q.push(v);
+			}
+		}
+	}
+}
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n,m,u,v; cin >> n >> m >> u >> v;
+		while(m--){
+			int x,y; cin >> x >> y;
+			ke[x].push_back(y);
+		}
+		BFS(u);
+		if(used[v]==0){
+			cout << -1 ;
+		}
+		else{
+			vector <int> kq;
+			while(v!=u){
+				kq.push_back(v);
+				v = parent[v];
+			}
+			kq.push_back(u);
+			reverse(kq.begin(),kq.end());
+			for(int x : kq){
+				cout << x << " " ;
+			}
+		}
+		cout << endl;
+		for(int i=1;i<=n;i++) ke[i].clear();
+		memset(used,0,sizeof(used));
+		memset(parent,0,sizeof(parent));
+	}
+}
