@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+node* makenode(int x){
+	node *newnode = new node;
+	newnode->data = x;
+	newnode->left = newnode->right = NULL;
+	return newnode;
+}
+void makeroot(node *root,int u,int v,char c){
+	if(c == 'L') root->left = makenode(v);
+	else root->right = makenode(v);
+}
+void insertnode(node *root,int u,int v,char c){
+	if(root == NULL) return;
+	if(root->data == u) makeroot(root,u,v,c);
+	else{
+		insertnode(root->left,u,v,c);
+		insertnode(root->right,u,v,c);
+	}	
+}
+int main(){
+	int t; cin >> t;
+	while(t--){
+		node *root=NULL;
+		int n; cin >> n;
+		for(int i=1;i<=n;i++){
+			int u,v;
+			char c;
+			cin >> u >> v >> c;
+			if(root==NULL){
+				root = makenode(u);
+				makeroot(root,u,v,c);
+			}
+			else{
+				insertnode(root,u,v,c);
+			}
+		}
+	}
+}
