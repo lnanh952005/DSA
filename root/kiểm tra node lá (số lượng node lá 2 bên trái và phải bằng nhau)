@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define faster() {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+node* makenode(int x){
+	node *newnode = new node;
+	newnode->data = x;
+	newnode->left = newnode->right = NULL;
+	return newnode;
+}
+void makeroot(node *root,int u,int v,char c){
+	if(c == 'L') root->left = makenode(v);
+	else root->right = makenode(v);
+}
+void insertnode(node *root,int u,int v,char c){
+	if(root == NULL) return;
+	if(root->data == u) makeroot(root,u,v,c);
+	else{
+		insertnode(root->left,u,v,c);
+		insertnode(root->right,u,v,c);
+	}
+}
+void level(node* root){
+	queue <node*> q;
+	q.push(root);
+	while(q.size()){
+		node* tmp = q.front(); q.pop();
+		cout << tmp->data <<" ";
+		if(tmp->left != NULL){
+			q.push(tmp->left);
+		}
+		if(tmp->right != NULL){
+			q.push(tmp->right);
+		}
+	}
+}
+int count_leaf(node* root){
+	if(root == NULL) return 0;
+	if(root->left == NULL && root->right == NULL){
+		return 1;
+	}
+	return count_leaf(root->left) + count_leaf(root->right);
+}
+int main(){
+    faster();
+	int t; cin >> t;
+	while(t--){
+		node *root=NULL;
+		int n; cin >> n;
+		for(int i=1;i<=n;i++){
+			int u,v;
+			char c;
+			cin >> u >> v >> c;
+			if(root==NULL){
+				root = makenode(u);
+				makeroot(root,u,v,c);
+			}
+			else{
+				insertnode(root,u,v,c);
+			}
+		}
+		cout << (count_leaf(root->left) == count_leaf(root->right)) << endl;
+	}
+}
