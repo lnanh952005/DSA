@@ -1,1 +1,44 @@
-
+#include <bits/stdc++.h>
+using namespace std;
+vector <int> ke[1001];
+int used[1001];
+int parent[1001];
+int n,m,ok;
+void nhap(){
+	cin >> n >> m;
+	while(m--){
+		int x,y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+void chu_trinh(int u){
+	used[u] = 1;
+	for(int v : ke[u]){
+		if(used[v]==0){
+			used[v]=1;
+			parent[v] = u;
+			chu_trinh(v);
+		}
+		else if(v != parent[u]){
+			ok=0;
+		}
+	}
+}
+int main() {
+	int t; cin >> t;
+	while(t--){
+		nhap();
+		ok=1;
+		for(int i=1;i<=n;i++){
+			if(used[i]==0){
+				chu_trinh(i);
+			}
+		}
+		if(ok) cout << "NO\n";
+		else cout << "YES\n"; 
+		memset(used,0,sizeof(used));
+		memset(parent,0,sizeof(parent));
+		for(int i=1;i<=n;i++) ke[i].clear();
+	}
+}
