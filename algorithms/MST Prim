@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector <pair<int,int>> ke[1001];
+int take[1001];
+int n,m;
+void nhap(){
+	cin >> n >> m;
+	for(int i=0;i<m;i++){
+		int x,y,w; cin >> x >> y >> w;
+		ke[x].push_back({y,w});
+		ke[y].push_back({x,w});
+	}
+}
+void rs(){
+	for(int i=1;i<=n;i++) ke[i].clear();
+	memset(take,0,sizeof(take));
+}
+void Prime(int s){
+	take[s] = 1;
+	priority_queue< pair<int,int> ,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+	for(auto v : ke[s]){
+		if(!take[v.first]){
+			pq.push({v.second,v.first});			
+		}
+	}
+	int d = 0;
+	while(pq.size()){
+		auto e = pq.top() ; pq.pop();
+		int u = e.second, w = e.first;
+		if(!take[u]){
+			take[u] = 1;
+			d += w;
+			for(auto v : ke[u]){
+				if(!take[v.first]){
+					pq.push({v.second,v.first});
+				}
+			}
+		}
+	}
+	cout << d << endl;
+}
+int main() {
+	int t; cin >> t;
+	while(t--){
+		nhap();
+		Prime(1);
+		rs();
+	}
+}
