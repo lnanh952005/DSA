@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	queue <int> q;
+	int t;cin >> t;
+	getchar();
+	while(t--) {
+		string s; getline(cin,s);
+		if(s[1] == 'U'){
+			stringstream ss(s);
+			string tmp;
+			while(ss >> tmp){
+			}
+			q.push(stoi(tmp));
+		}
+		else if(s[1] == 'R'){
+			if(q.size()) cout << q.front() << endl;
+			else cout << "NONE" << endl;
+		}
+		else{
+			if(q.size()) q.pop();
+		}
+	}
+}
