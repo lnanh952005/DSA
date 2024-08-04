@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	stack <int> st;
+	vector <int> v;
+	string s;
+	while(cin >> s){
+		if(s == "push"){
+			int x; cin >> x;
+			st.push(x);
+			v.push_back(x);
+		}
+		else if(s == "pop"){
+			if(st.size()){
+				st.pop();
+				v.pop_back();
+			}
+		}
+		else{
+			if(st.size()){
+				for(int i=0;i<v.size();i++){
+					cout << v[i] <<" ";
+				}
+				cout << endl;
+			}
+			else{
+			    cout << "empty"<<endl;
+			}
+		}
+	}
+}
