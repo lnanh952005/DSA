@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int x[101],n;
+char c;
+string s;
+string tmp;
+void nhap(){
+	tmp = "";
+	s = "";
+	cin >> c >> n;
+	int k = (int)c - 64;
+	for(int i=1;i<=k;i++){
+		s += (char)(64 + i);
+	}
+}
+void Try(int i,int pos){
+	for(int j=pos;j<s.size();j++){
+		tmp += s[j];
+		if(i == n){
+			cout << tmp << endl;
+		}
+		else{
+			Try(i+1,j);
+		}
+		tmp.pop_back();
+	}
+}
+int main() {
+	nhap();
+	Try(1,0);
+}
