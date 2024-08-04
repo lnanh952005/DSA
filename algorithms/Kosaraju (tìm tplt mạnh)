@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+/////////////////////////// có hướng
+int n,m;
+int used[1001];
+stack <int> st;
+vector <int> ke[1001];
+vector <int> ek[1001];
+void nhap(){
+	cin >> n >> m;
+	while(m--){
+		int x,y; cin >> x >> y;
+		ke[x].push_back(y);
+		ek[y].push_back(x);
+	}
+}
+void DFS1(int u){ // sx topo
+	used[u]=1;
+	for(int v : ke[u]){
+		if(used[v]==0){
+			used[v]=1;
+			DFS1(v);
+		}
+	}
+	st.push(u);
+}
+void DFS2(int u){
+	cout << u << " ";
+	used[u]=1;
+	for(int v : ek[u]){
+		if(used[v]==0){
+			used[v]=1;
+			DFS2(v);
+		}
+	}
+}
+void kosaraju(){
+	int cc= 0;
+	for(int i=1;i<=n;i++){
+		if(used[i]==0){
+			DFS1(i);
+		}
+	}
+	//sau vong for se luu dc thu tu sx topo
+	memset(used,0,sizeof(used));
+	while(st.size()){
+		int top = st.top(); st.pop();
+		if(used[top]==0){
+			cc++;
+			DFS2(top);
+			cout << endl;
+		}
+	}
+	cout << cc << endl;
+}
+int main(){
+	nhap();
+	kosaraju();
+}
