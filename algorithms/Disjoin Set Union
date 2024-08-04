@@ -1,0 +1,56 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+int par[1001]; //par[i]: cha của đỉnh i
+int sz[1001]; //sz[i]: tập con của đỉnh i
+int n,m;
+void kt(){
+	//ban đầu khởi tạo cha của đỉnh i là chính i 
+	//và tập con của nó là chính nó 
+	for(int i=1;i<=n;i++){
+		par[i] = i;
+		sz[i] = 1;
+	}
+}
+int find(int u){
+	if(u == par[u]){
+		return u;
+	}
+	else{
+		return par[u] = find(par[u]);
+	}
+}
+void Union(int u,int v){
+	u = find(u);
+	v = find(v);
+	if(u == v){
+		return;
+	}
+	if(sz[u] < sz[v]){
+	    par[u] = v;
+	    sz[v]+=sz[u];
+	}
+	else{
+	    par[v] = u;
+	    sz[u] +=sz[v];
+	}
+}
+int main(){
+	int t; cin >> t;
+	while(t--){
+		int dem=0;
+		cin >> n >> m;
+		kt();
+		for(int i=0;i<m;i++){
+			int x,y; cin >> x >> y;
+			Union(x,y);
+			Union(y,x);
+		}
+		for(int i=1;i<=n;i++){
+			if(i == par[i]){
+				dem++;
+			}
+		}
+		cout <<dem<< endl;
+	}
+}
