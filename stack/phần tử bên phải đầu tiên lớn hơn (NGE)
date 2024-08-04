@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+void NGE(int a[], int d[], int n){
+	stack <int> st;
+	for(int i=0;i<n;i++){
+		while(st.size() && a[i] > a[st.top()]){
+			d[st.top()] = a[i];
+			st.pop();
+		}
+		st.push(i);
+	}
+	while(st.size()){
+		d[st.top()] = -1;
+		st.pop();
+	}
+}
+int main() {
+	int t; cin >> t;
+	while(t--){
+		int n; cin >> n;
+		int a[n];
+		int d[n];
+		for(int &x : a) cin >> x;
+		NGE(a,d,n);
+		for(int x : d) cout << x << " ";
+		cout << endl;
+	}
+}
