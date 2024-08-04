@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+void min_left(ll a[], ll L[],int n){
+	stack <int> st;
+	for(int i=n-1;i>=0;i--){
+		while(st.size() && a[st.top()] > a[i]){
+			L[st.top()] = i;
+			st.pop();
+		}
+		st.push(i);
+	}
+	while(st.size()){
+		L[st.top()] = -1;
+		st.pop();
+	}
+}
+void min_right(ll a[],ll R[], int n){
+	stack <int> st;
+	for(int i=0;i<n;i++){
+		while(st.size() && a[st.top()] > a[i]){
+			R[st.top()] = i;
+			st.pop();
+		}
+		st.push(i);
+	}
+	while(st.size()){
+		R[st.top()] = n;
+		st.pop();
+	}
+}
+int main() {
+	int t ;cin >> t;
+	while(t--){
+		int n; cin >> n;
+		ll H[n], L[n], R[n];
+		for(ll &x : H) cin >> x;
+		min_left(H,L,n);
+		min_right(H,R,n);
+		ll res = 0;
+		for(int i=0;i<n;i++){
+			ll rong = R[i] - L[i] - 1;
+			ll S = 1ll * rong * H[i];
+			res = max(res,S);
+		}
+		cout << res << endl;
+	}
+}
