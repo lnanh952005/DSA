@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+	stack<string>st;
+	int q; cin >> q;
+	getchar();
+	while(q--){
+		string s; 
+		getline(cin,s);
+		if(s[1]=='U'){
+			string k="";
+			for(int i=5;i<s.size();i++){
+				k+=s[i];
+			}
+			st.push(k);
+		}
+		else if(s[1]=='O'){
+			if(st.size()){
+				st.pop();
+			}
+		}
+		else{
+			if(st.size()){
+				cout << st.top() << endl;
+			}
+			else{
+				cout << "NONE" << endl;
+			}
+		}
+	}
+}
