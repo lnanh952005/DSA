@@ -1,0 +1,138 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+// MODULO
+(a+b)%c = ((a%c) + (b%c))%c
+(a-b)%c = ((a%c) - (b%c)+c)%c
+(a*b)%c = ((a%c) *(b%c))%c
+(a^b)%c = (a%c) ^ b%c
+(a/b)%c = (a%c * b^-1) %c 
+
+// SÀNG SO NT
+---------------------------------------------------
+int nt[10000001]; // 10^7
+void sangnt(){
+	for(int i=0;i<=10000001;i++){
+		nt[i]=1;
+	}
+	nt[0] = nt[1] = 0;
+	for(int i=2;i<=sqrt(10000001);i++){
+		if(nt[i]){
+			for(int j=i*i;j<=10000001;j+=i){
+				nt[i]=0;
+			}
+		}
+	}
+}
+-----------------------------------------------------
+// PHÂN TÍCH THUA SO NT
+void phantich(int n){
+	for(int i=2;i<=sqrt(n);i++){
+		while(n%i==0){
+			cout << i << " ";
+		    n/=i;
+	    }
+    }
+    if(n>1) cout << n;
+}
+---------------------------------------------------
+//tổng ước của 1 số:
+int tonguoc(int n){
+	int sum=0;
+	for(int i=1;i<=sqrt(n);i++){
+		if(n%i==0){
+			sum+=i;
+			if(i!=n/i){
+				sum+=n/i;
+			}	
+		}	
+	}
+	return sum;
+}
+----------------------------------------------------
+// TO HOP nCk;
+ll to_hop(ll n,ll k){
+	ll res = 1;
+	int k = min(k ,n-k); // giam so vong lap 
+	for(int i=1;i<=k;i++){
+		res *= (n - i + 1);
+		res /= i;
+	}
+	return res;
+}
+--------------------------------------------------------
+// LUY THUA NHI PHÂN
+ll binpow(ll a,ll b){
+	if(b==0) return 1;
+	ll x = binpow(a,b/2);
+	if(b%2 != 0 ) return x*x*a;
+	else return x*x;
+}
+-------------------------------------------------------
+// giai thuat euler mo rong ,ax + by = gcd(a,b)
+int x,y,g;
+void extended_gcd(int a,int b){
+	if(b==0){
+		return a;
+		y=0;
+		x=1;
+		g=a;
+	}
+	else{
+		return extended_gcd(b,a%b);
+		int tmp = x; // x1
+		x = y; //x= y1
+		y = tmp - a/b * y;
+	}
+}
+----------------------------------------------------------------
+//NGHICH DAO MODULO dung : dung de tinh a / b % m = (a%m * b^-1%m) % m
+//a*b % m = a * b^-1 % m
+int mod_reverse(int a,int m){
+	extended_gcd(a,m);
+	return (x % m + m) % m;
+}
+//neu m la snt thi tinh nghich dao modulo bang powmod :
+----------------------------------------------------------------
+// SO HOAN HAO
+// neu p la snt va 2^P - 1 cung la snt => 2^(P-1) * (2^P -1 ) la so hoan hao. 
+ll hh[8];
+int cnt =0;
+int nt(int n){
+	for(int i=2;i<=sqrt(n);i++){
+		if(n%i==0) return 0;
+	}
+	return n>1;
+}
+void init(){
+	for(int p=2;p<=32;p++){
+		if(nt(p)){
+			int tmp = (int)pow(2,p) - 1;
+			if(nt(tmp)){
+				hh[cnt] = 1ll* (int)pow(2,p-1) * tmp ;
+				cnt++;
+			}
+		}
+	}
+}
+-------------------------------------------------------------------------
+//(a^b)%c
+ll powmod(ll a,ll b,ll c){
+	ll res=1;
+	a%=c;
+	for(int i=1;i<=b;i++){
+		res *= a;
+		res %= c;
+	}
+	return res%c
+}
+-----------------------------------------------------------------------------
+// legendree tinh so mu cua 1 so
+int degree(int n,int k){
+	int ans=0;
+	for(int i=k;i<=n;i*=k){
+		ans += n/i;
+	}
+	return ans;
+}
+-------------------------------------------------------------------------------
