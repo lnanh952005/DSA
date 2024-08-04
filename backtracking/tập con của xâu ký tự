@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+string s;
+string tmp;
+vector <string> res;
+void Try(int i,int pos){
+	for(int j=pos;j<s.size();j++){
+		tmp += s[j];
+		res.push_back(tmp);
+		if(j < s.size()){
+			Try(i+1,j+1);
+		}
+		tmp.pop_back();
+	}
+}
+int main() {
+	int t; cin >> t;
+	while(t--){
+		int n;cin >> n;
+		cin >> s;
+		tmp = "";
+		Try(1,0);
+		for(string x : res){
+			cout << x <<" ";
+		}
+		cout << endl;
+		res.clear();
+	}
+}
