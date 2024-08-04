@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+    Cho đồ thị vô hướng G, có V đỉnh và E cạnh. Xây dựng cây khung nhỏ nhất của đồ thị.
+
+    B1: Nhập danh sách kề và sort theo trọng số tăng dần.
+    B2: Sử dụng DSU kiểm tra xem nếu nối 2 cạnh đó vào cây khung hiện tại có tạo thành 1 chu trình hay không?
+        - Nếu tạo thành 1 chu trình, bỏ qua.
+        - Nếu không tạo thành 1 chu trình, ta thêm cạnh đó vào cây khung.
+*/
+int par[1001];
+int sz[1001];
+int n,m;
+struct edge{
+	int x,y,w;	
+};
+vector <edge> dscanh;
+void nhap(){
+	cin >> n >> m;
+	for(int i=0;i<m;i++){
+		int x,y,w; cin >> x >> y >> w;
+		dscanh.push_back({x,y,w});
+	}
+	for(int i=1;i<=n;i++){
+		sz[i] = 1;
+		par[i] = i;
+	}
+	sort(dscanh.begin(),dscanh.end(),[](edge a,edge b)->bool{
+		return a.w < b.w;
+	});
+}
+void rs(){
+    memset(par,0,sizeof(par));
+	memset(sz,0,sizeof(sz));
+	dscanh.clear();
+}
+int find(int u){
+	if(u == par[u]){
+		return u;
+	}
+	else{
+		return par[u] = find(par[u]);
+	}
+}
+bool Union(int u,int v){
+	u = find(u);
+	v = find(v);
+	if(u == v){
+		return false;
+	}
+	if(sz[u] > sz[v]){
+		par[v] = u;
+		sz[u] += sz[v];
+	}
+	else{
+		par[u] = v;
+		sz[v] += sz[u];
+	}
+	return true;
+}
+void kruskal(){
+	vector <edge> MST;
+	int d = 0;
+	for(edge e : dscanh){
+		if(MST.size() == n-1){
+			break;
+		}
+		if( Union(e.x,e.y) ){
+			MST.push_back(e);
+			d += e.w;
+		}
+	}
+	cout << d << endl;
+}
+int main() {
+	int t; cin >> t;
+	while(t--){
+		nhap();
+		kruskal();
+		rs();
+	}
+}
