@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+// cay khung co n dinh va n-1 canh ( trung hop thuat toan DFS)
+using namespace std;
+vector <int> ke[1001];
+vector <pair<int,int>> ve;
+int used[1001];
+int n,m,st;
+void nhap(){
+	cin >> n >> m >> st;
+	for(int i=0;i<m;i++){
+		int x,y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+void DFS(int u){
+	used[u]=1;
+	for(int v : ke[u]){
+		if(used[v]==0){
+			ve.push_back({u,v});
+			used[v]=1;
+			DFS(v);
+		}
+	}
+}
+int main(){
+	int t; cin >> t;
+	while(t--){
+		nhap();
+		DFS(st);
+		if(ve.size() == n-1){
+		    for(auto it : ve){
+		        cout << it.first << " " << it.second << endl;
+		    }
+		}
+		else{
+		    cout << -1 << endl;
+		}
+		memset(used,0,sizeof(used));
+		for(int i=1;i<=n;i++) ke[i].clear();
+		ve.clear();
+	}
+}
